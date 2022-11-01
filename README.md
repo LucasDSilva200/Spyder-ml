@@ -10,13 +10,17 @@
 
 Uma ferramenta feita para facilitar a análise de código html.
 
-<h2>INSTALL:</h2>
+<h2>INSTALL(git clone):</h2>
 
 git clone https://github.com/accessmaker/Spyder-ml
 
 python setup.py install
 
-Em breve com o pip
+
+<h2>INSTALL(PIP):</h2>
+
+
+pip install spyder-ml
 
 
 <h2>USAGE:</h2>
