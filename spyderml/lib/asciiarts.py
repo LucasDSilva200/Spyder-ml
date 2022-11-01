@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 
 
-from spyderml import __version__
 import random
+
+from colorama import Fore
+
+from spyderml import __version__
+
+green = Fore.GREEN
+reset = Fore.RESET
 
 
 def banner():
@@ -20,7 +26,7 @@ def banner():
 ░░░▐░░▐▀░░▀▀░▒░░░░▀░░░░░░░░░░░░░░░░
 ░░░░░▐▌░░░░░░░▒░░░░░░░░░░░░░░░░░░░░
 ░░░░▄▒░░░░░░░░░▀░░░░░░░░░░░░░░░░░░░     
-░░░░Spider-ml version:{__version__}                
+░░░░Spider-ml version: {green}{__version__}{reset}                
 ''', f'''
 ───────▐──▌─────▐──▌─────────────
 ──────▐▌─█───────█─▐▌────────────
@@ -35,7 +41,7 @@ def banner():
 ─────█────█─────█────█───────────
 ──────█───█─────█───█────────────
 ───────▌───▌───▐───▐─────────────
-───Spider-ml version: {__version__}
+───Spider-ml version: {green}{__version__}{reset}
 ''']
 
     return random.choice(images)
