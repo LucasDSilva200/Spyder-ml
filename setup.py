@@ -34,7 +34,7 @@ setup(
 	# Either the link to your github or to your website 
 	url='https://github.com/accessmaker/Spyder-ml',
 	# Link from which the project can be downloaded 
-	download_url=['https://github.com/accessmaker/Spyder-ml.git','https://pypi.org/project/spyder-ml/'],
+	download_url='https://github.com/accessmaker/Spyder-ml.git',
 	# List of keywords 
 	keywords=["spyderml","web","security"],
 	# List of packages to install with this one 
