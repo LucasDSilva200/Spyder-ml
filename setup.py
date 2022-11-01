@@ -32,9 +32,9 @@ setup(
 	# Your email 
 	author_email='accessmaker.mlbb@gmail.com',
 	# Either the link to your github or to your website 
-	url='',
+	url='https://github.com/accessmaker/Spyder-ml',
 	# Link from which the project can be downloaded 
-	download_url='',
+	download_url='https://github.com/accessmaker/Spyder-ml.git',
 	# List of keywords 
 	keywords=["Uma ferramenta feita para facilitar a análise de código html."],
 	# List of packages to install with this one 
