@@ -38,7 +38,7 @@ setup(
 	# List of keywords 
 	keywords=["Uma ferramenta feita para facilitar a análise de código html."],
 	# List of packages to install with this one 
-	install_requires=["bs4", "requests","urllib3","setuptools","random"],
+	install_requires=["bs4", "requests","urllib3","setuptools"],
 	# https://pypi.org/classifiers/ 
 	classifiers=['Development Status :: 1 - Planning'],
 	scripts=["spyderml/bin/spyderml"]
