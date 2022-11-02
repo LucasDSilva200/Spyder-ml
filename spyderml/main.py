@@ -3,9 +3,8 @@
 
 import argparse
 
-from build.lib.spyderml.main import spyder_request
 from spyderml.lib.asciiarts import banner
-from spyderml.lib.utils import tratar_objetos, sopa_tags, sopa_comments, sopa_attrs, tratar_arquivo
+from spyderml.lib.utils import spyder_request, tratar_objetos, sopa_tags, sopa_comments, sopa_attrs, tratar_arquivo
 
 
 class SpyderHtml:
