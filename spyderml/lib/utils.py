@@ -30,13 +30,17 @@ def spyder_request(target):
         r = requests.get(target)
         return r
     except requests.exceptions.SSLError:
-        return f"{target}:\nErro de ssl"
+        print(f"{target}:\nErro de ssl")
+        exit()
     except requests.exceptions.MissingSchema:
-        return f"{target}:\nInvalid url\n http://?"
+        print(f"{target}:\nInvalid url\n http://?")
+        exit()
     except requests.exceptions.InvalidSchema:
-        return f"{target} ERROR"
+        print(f"{target} ERROR")
+        exit()
     except:
-        return "UNKNOWN ERROR"
+        print("UNKNOWN ERROR")
+        exit()
 
 
 def sopa_tags(documento, objeto):
