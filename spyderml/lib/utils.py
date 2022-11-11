@@ -59,8 +59,9 @@ def sopa_comments(documento):
 
 def sopa_attrs(documento, objeto):
     html = bs(documento.content, 'html.parser')
-    if len(objeto) > 1:
+    if type(objeto) == list:
         for o in objeto:
+            print(o)
             for atributo in html.select(f"[{o}]"):
                 print(atributo)
     else:
