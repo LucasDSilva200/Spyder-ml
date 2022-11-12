@@ -26,7 +26,7 @@ def banner():
 ░░░▐░░▐▀░░▀▀░▒░░░░▀░░░░░░░░░░░░░░░░
 ░░░░░▐▌░░░░░░░▒░░░░░░░░░░░░░░░░░░░░
 ░░░░▄▒░░░░░░░░░▀░░░░░░░░░░░░░░░░░░░     
-░░░░Spider-ml version: {green}{__version__}{reset}                
+░░░░Spyder-ml version: {green}{__version__}{reset}                
 ''', f'''
 ───────▐──▌─────▐──▌─────────────
 ──────▐▌─█───────█─▐▌────────────
@@ -41,7 +41,7 @@ def banner():
 ─────█────█─────█────█───────────
 ──────█───█─────█───█────────────
 ───────▌───▌───▐───▐─────────────
-───Spider-ml version: {green}{__version__}{reset}
+───Spyder-ml version: {green}{__version__}{reset}
 ''']
 
     return random.choice(images)

@@ -4,24 +4,14 @@ import urllib3
 from bs4 import BeautifulSoup as bs
 from bs4 import Comment
 
+from spyderml.lib.file import save_output
+
 
 def tratar_objetos(objetos: str):
     if "," in objetos:
         objetos = objetos.split(',')
         return objetos
     return objetos
-
-
-def tratar_arquivo(filepath):
-    try:
-        with open(filepath, 'r') as file:
-            linhas = file.read()
-            linhas = linhas.strip()
-        linhas = linhas.split('\n')
-        return linhas
-    except FileNotFoundError:
-        print(f"Arquivo não encontrado({filepath})")
-        exit()
 
 
 def spyder_request(target):
@@ -43,27 +33,35 @@ def spyder_request(target):
         exit()
 
 
-def sopa_tags(documento, objeto):
+def sopa_tags(documento, objeto, file=None):
     html = bs(documento.content, 'html.parser')
     resultados = html.find_all(objeto)
     for resultado in resultados:
+        if file is not None:
+            save_output(filename=file, text=resultado)
         print(resultado)
 
 
-def sopa_comments(documento):
+def sopa_comments(documento, file=None):
     html = bs(documento.content, 'html.parser')
     comentarios = html.find_all(string=lambda text: isinstance(text, Comment))
-    for commentario in comentarios:
-        print(commentario)
+    for comentario in comentarios:
+        if file is not None:
+            save_output(filename=file, text=comentario)
+        print(comentario)
 
 
-def sopa_attrs(documento, objeto):
+def sopa_attrs(documento, objeto, file=None):
     html = bs(documento.content, 'html.parser')
     if type(objeto) == list:
         for o in objeto:
             print(o)
             for atributo in html.select(f"[{o}]"):
+                if file is not None:
+                    save_output(filename=file, text=atributo)
                 print(atributo)
     else:
         for atributo in html.select(f"[{objeto}]"):
+            if file is not None:
+                save_output(filename=file, text=atributo)
             print(atributo)

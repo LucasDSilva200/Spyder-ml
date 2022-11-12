@@ -2,7 +2,7 @@
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="http://img.shields.io/static/v1?label=VERSION&message=0.3.4&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=VERSION&message=0.3.5&color=blue&style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/accessmaker/Spyder-ml?style=for-the-badge"/>
 </p>
 
@@ -32,13 +32,15 @@ usage: spyderml [-h] -t TARGET [--tags TAGS] [--comments] [--attribs ATTRIBS]
 Spyder-ml by:Lucas dSilva
 
 options:
-  -h, --help            show this help message and exit
-  -t TARGET, --target TARGET
+  <br>-h, --help            show this help message and exit
+  <br>-t TARGET, --target TARGET
                         Parâmetro que define a URL do alvo "http://example.com/index.html"
-  --tags TAGS           Define quais tags o programa vai trazer
-  --comments            Flag que traz os comentários
-  --attribs ATTRIBS     Flag que define quais atributos a aplicação irá procurar.
-
+  <br>--tags TAGS           Define quais tags o programa vai trazer
+  <br>--comments            Flag que traz os comentários
+  <br>--attribs ATTRIBS     Flag que define quais atributos a aplicação irá procurar.
+  <br>-o OUTPUT, --output OUTPUT
+                        Flag que define em qual arquivo vai ser salvo a saída
+                        do comando.
 <h2>FUNCTIONALITY</h2>
 
 'Funcionalidade': Ele busca no documento html por coisas especificas

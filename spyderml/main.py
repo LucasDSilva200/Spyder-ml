@@ -4,7 +4,8 @@
 import argparse
 
 from spyderml.lib.asciiarts import banner
-from spyderml.lib.utils import spyder_request, tratar_objetos, sopa_tags, sopa_comments, sopa_attrs, tratar_arquivo
+from spyderml.lib.utils import spyder_request, tratar_objetos, sopa_tags, sopa_comments, sopa_attrs
+from spyderml.lib.file import open_file
 
 
 class SpyderHtml:
@@ -17,7 +18,7 @@ class SpyderHtml:
             print("Você só pode usar os argumentos (file e target) um por vez")
 
         elif self.args.file:
-            alvos = tratar_arquivo(filepath=self.args.file)
+            alvos = open_file(filepath=self.args.file)
             htmls = []
             for alvo in alvos:
                 htmls.append(spyder_request(alvo))
@@ -29,12 +30,12 @@ class SpyderHtml:
                             exit()
                         elif self.args.tags:
                             tags = tratar_objetos(objetos=self.args.tags)
-                            sopa_tags(documento=html, objeto=tags)
+                            sopa_tags(documento=html, objeto=tags, file=self.args.output)
                         elif self.args.comments:
-                            sopa_comments(documento=html)
+                            sopa_comments(documento=html, file=self.args.output)
                         else:
                             attr = tratar_objetos(objetos=self.args.attribs)
-                            sopa_attrs(documento=html, objeto=attr)
+                            sopa_attrs(documento=html, objeto=attr, file=self.args.output)
 
 
 
@@ -48,12 +49,12 @@ class SpyderHtml:
                 exit()
             elif self.args.tags:
                 tags = tratar_objetos(objetos=self.args.tags)
-                sopa_tags(documento=texto, objeto=tags)
+                sopa_tags(documento=texto, objeto=tags, file=self.args.output)
             elif self.args.comments:
-                sopa_comments(documento=texto)
+                sopa_comments(documento=texto, file=self.args.output)
             else:
                 attr = tratar_objetos(objetos=self.args.attribs)
-                sopa_attrs(documento=texto, objeto=attr)
+                sopa_attrs(documento=texto, objeto=attr, file=self.args.output)
 
 
 def main():
@@ -68,6 +69,9 @@ def main():
     parser.add_argument('--comments', help="Flag que traz os comentários", default=False, action='store_true', )
 
     parser.add_argument('--attribs', type=str, help="Flag que define quais atributos a aplicação irá procurar.")
+
+    parser.add_argument('-o', '--output', type=str, help="Flag que define em qual arquivo vai ser salvo a saída do "
+                                                         "comando.")
 
     args = parser.parse_args()
 
