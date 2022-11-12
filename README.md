@@ -26,7 +26,7 @@ pip install spyder-ml
 <h2>USAGE:</h2>
 
 spyderml -h
-usage: spyderml [-h] -t TARGET [--tags TAGS] [--comments] [--attribs ATTRIBS]
+usage: spyderml [-h] -t TARGET [--tags TAGS] [--comments] [--attribs ATTRIBS] [-o OUTPUT]
 
 
 Spyder-ml by:Lucas dSilva
