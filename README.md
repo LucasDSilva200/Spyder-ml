@@ -2,13 +2,12 @@
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="http://img.shields.io/static/v1?label=VERSION&message=0.3.5&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=VERSION&message=0.3.6&color=blue&style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/accessmaker/Spyder-ml?style=for-the-badge"/>
 </p>
 
 
-
-Uma ferramenta feita para facilitar a análise de código html.
+A tool made to facilitate the analysis of html code.
 
 <h2>INSTALL(git clone):</h2>
 
@@ -25,22 +24,23 @@ pip install spyder-ml
 
 <h2>USAGE:</h2>
 
-spyderml -h
-usage: spyderml [-h] -t TARGET [--tags TAGS] [--comments] [--attribs ATTRIBS]
+spyderml [-h] [-t TARGET] [-f FILE] [--tags TAGS] [--comments]
+               [--attribs ATTRIBS] [-o OUTPUT]
 
-
-Spyder-ml by:Lucas dSilva
+A tool made to facilitate the analysis of html code.
 
 options:
-  <br>-h, --help            show this help message and exit
-  <br>-t TARGET, --target TARGET
-                        Parâmetro que define a URL do alvo "http://example.com/index.html"
-  <br>--tags TAGS           Define quais tags o programa vai trazer
-  <br>--comments            Flag que traz os comentários
-  <br>--attribs ATTRIBS     Flag que define quais atributos a aplicação irá procurar.
-  <br>-o OUTPUT, --output OUTPUT
-                        Flag que define em qual arquivo vai ser salvo a saída
-                        do comando.
-<h2>FUNCTIONALITY</h2>
+  -h, --help            show this help message and exit
+  -t TARGET, --target TARGET
+                        Parameter that defines the target URL
+                        http://example.com/index.html
+  -f FILE, --file FILE  Parameter that defines target URLs
+  --tags TAGS           Flag that defines which tags the program will bring
+  --comments            Flag that brings the comments
+  --attribs ATTRIBS     Flag that defines which attributes the application
+                        will look for.
+  -o OUTPUT, --output OUTPUT
+                        Flag that defines in which file the command output
+                        will be saved.
 
-'Funcionalidade': Ele busca no documento html por coisas especificas
+'Functionality': It searches the html document for specific things

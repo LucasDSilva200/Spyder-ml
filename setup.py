@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 from setuptools import find_packages, setup
 
@@ -16,13 +18,13 @@ setup(
     packages=find_packages('.'),
     # Start with a small number and increase it with
     # every change you make https://semver.org
-    version='0.3.5',
+    version='0.3.6',
     # Chose a license from here: https: //
     # help.github.com / articles / licensing - a -
     # repository. For example: MIT.
     license='MIT',
     # Short description of your library
-    description='Uma ferramenta feita para facilitar a análise de código html.',
+    description='A tool made to facilitate the analysis of html code.',
     # Long description of your library
     long_description=long_description,
     long_description_content_type='text/markdown',
