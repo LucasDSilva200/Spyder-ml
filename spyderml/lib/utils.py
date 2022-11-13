@@ -9,7 +9,7 @@ from spyderml.lib.file import save_output
 
 def treat_objects(objects: str):
     if "," in objects:
-        objetos = objects.split(',')
+        objects = objects.split(',')
         return objects
     return objects
 
@@ -55,7 +55,6 @@ def soup_attrs(document, object, file=None):
     html = bs(document.content, 'html.parser')
     if type(object) == list:
         for o in object:
-            print(o)
             for attribute in html.select(f"[{o}]"):
                 if file is not None:
                     save_output(filename=file, text=attribute)
