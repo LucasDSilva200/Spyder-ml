@@ -15,35 +15,35 @@ class SpyderHtml:
     def run(self):
         print(banner())
 
-        if self.args.file:
-            targets = open_file(filepath=self.args.file)
+        if self.args['file']:
+            targets = open_file(filepath=self.args['file'])
             htmls = []
             for target in targets:
                 htmls.append(spyder_request(target))
                 try:
                     for html in htmls:
-                        if self.args.tags:
-                            tags = treat_objects(objects=self.args.tags)
-                            soup_tags(document=html, object=tags, file=self.args.output)
-                        elif self.args.comments:
-                            soup_comments(document=html, file=self.args.output)
+                        if self.args['tags']:
+                            tags = treat_objects(objects=self.args['tags'])
+                            soup_tags(document=html, object=tags, file=self.args['output'])
+                        elif self.args['comments']:
+                            soup_comments(document=html, file=self.args['output'])
                         else:
-                            attr = treat_objects(objects=self.args.attribs)
-                            soup_attrs(document=html, object=attr, file=self.args.output)
+                            attr = treat_objects(objects=self.args['attribs'])
+                            soup_attrs(document=html, object=attr, file=self.args['output'])
 
                 except AttributeError:
                     pass
 
         else:
-            text = spyder_request(target=self.args.target)
-            if self.args.tags:
-                tags = treat_objects(objects=self.args.tags)
-                soup_tags(document=text, object=tags, file=self.args.output)
-            elif self.args.comments:
-                soup_comments(document=text, file=self.args.output)
+            text = spyder_request(target=self.args['target'])
+            if self.args['tags']:
+                tags = treat_objects(objects=self.args['tags'])
+                soup_tags(document=text, object=tags, file=self.args['output'])
+            elif self.args['comments']:
+                soup_comments(document=text, file=self.args['output'])
             else:
-                attr = treat_objects(objects=self.args.attribs)
-                soup_attrs(document=text, object=attr, file=self.args.output)
+                attr = treat_objects(objects=self.args['attribs'])
+                soup_attrs(document=text, object=attr, file=self.args['output'])
 
 
 def main():
@@ -67,7 +67,10 @@ def main():
     parser.add_argument('-o', '--output', type=str, help="Flag that defines in which file the command output will be "
                                                          "saved.")
 
-    args = parser.parse_args()
+    args = vars(parser.parse_args())
+
+    if not any(args.values()):
+        parser.error('No arguments provided.')
 
     sp = SpyderHtml(args)
     sp.run()
