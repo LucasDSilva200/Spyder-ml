@@ -1,7 +1,8 @@
 import requests
 import urllib3
+import logging
 
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup as Bs
 from bs4 import Comment
 
 from spyderml.lib.file import save_output
@@ -28,13 +29,13 @@ def spyder_request(target):
     except requests.exceptions.InvalidSchema:
         print(f"{target} ERROR")
         exit()
-    except:
-        print("UNKNOWN ERROR")
+    except Exception as e:
+        logging.exception(e)
         exit()
 
 
 def soup_tags(document, object, file=None):
-    html = bs(document.content, 'html.parser')
+    html = Bs(document.content, 'html.parser')
     results = html.find_all(object)
     for result in results:
         if file is not None:
@@ -43,7 +44,7 @@ def soup_tags(document, object, file=None):
 
 
 def soup_comments(document, file=None):
-    html = bs(document.content, 'html.parser')
+    html = Bs(document.content, 'html.parser')
     comments = html.find_all(string=lambda text: isinstance(text, Comment))
     for comment in comments:
         if file is not None:
@@ -52,7 +53,7 @@ def soup_comments(document, file=None):
 
 
 def soup_attrs(document, object, file=None):
-    html = bs(document.content, 'html.parser')
+    html = Bs(document.content, 'html.parser')
     if type(object) == list:
         for o in object:
             for attribute in html.select(f"[{o}]"):
