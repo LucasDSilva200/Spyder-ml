@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import sys
 
 from spyderml.lib.asciiarts import banner
 from spyderml.lib.utils import spyder_request, treat_objects, soup_tags, soup_comments, soup_attrs
 from spyderml.lib.file import open_file
+
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8')
 
 
 class SpyderHtml:
