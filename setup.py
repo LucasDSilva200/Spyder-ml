@@ -20,7 +20,7 @@ setup(
     packages=find_packages('.'),
     # Start with a small number and increase it with
     # every change you make https://semver.org
-    version='1.0.1',
+    version='1.0.2',
     # Chose a license from here: https: //
     # help.github.com / articles / licensing - a -
     # repository. For example: MIT.
@@ -41,7 +41,7 @@ setup(
     # List of keywords
     keywords=["spyderml", "web", "security"],
     # List of packages to install with this one
-    install_requires=["bs4", "requests", "urllib3", "setuptools", "colorama"],
+    install_requires=["bs4", "requests", "urllib3", "setuptools", "colorama","webtech"],
     # https://pypi.org/classifiers/
     classifiers=['Development Status :: 5 - Production/Stable'],
     scripts=["spyderml/bin/spyderml"]
