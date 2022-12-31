@@ -3,13 +3,15 @@ from spyderml.lib.detectos import detect
 
 def open_file(filepath):
     try:
+        if '~/' in filepath:
+            filepath = filepath.replace('~/',detect())
         with open(filepath, 'r') as file:
-            linhas = file.read()
-            linhas = linhas.strip()
-        linhas = linhas.split('\n')
-        return linhas
+            lines = file.read()
+            lines = lines.strip()
+        lines = lines.split('\n')
+        return lines
     except FileNotFoundError:
-        print(f"Arquivo não encontrado({filepath})")
+        print(f"File NotFound({filepath})")
         exit()
 
 
