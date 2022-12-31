@@ -22,7 +22,7 @@ def update_database():
     webtech.database.update_database(force=True)
 
 
-def detect_technologies(url):
+def detect_technologies(url, filepath=None):
     webtech.database.update_database()
     # you can use options, same as from the command line
     wt = webtech.WebTech(options={'json': True})
@@ -31,9 +31,13 @@ def detect_technologies(url):
     try:
         report = wt.start_from_url(url)
         techs = report['tech']
+        if filepath is not None:
+            save_output(filename=filepath, text=f"\nSite: {url} technologies:")
         print("Site: {} technologies:".format(url))
 
         for tech in techs:
+            if filepath is not None:
+                save_output(filename=filepath, text=f"Name: {tech['name']}\tVersion: {tech['version']}")
             print(f"Name: {tech['name']}\tVersion: {tech['version']}")
         print('\n')
     except webtech.utils.ConnectionException:

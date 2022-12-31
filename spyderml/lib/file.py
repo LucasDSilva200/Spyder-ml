@@ -16,10 +16,8 @@ def open_file(filepath):
 
 
 def save_output(filename, text):
-    if '~' in filename:
-        filename = filename.split('~/')
-        path = detect()
-        filename = path+filename[1]
+    if '~/' in filename:
+        filename = filename.replace('~/',detect())
     with open(filename, 'a+') as file:
         file.write(str(text))
-        file.write('\n' )
+        file.write('\n')

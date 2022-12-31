@@ -25,7 +25,7 @@ class SpyderHtml:
             htmls = []
             for target in targets:
                 if self.args['techs']:
-                    detect_technologies(url=target)
+                    detect_technologies(url=target, filepath=self.args['output'])
                 else:
                     htmls.append(spyder_request(target))
             try:
@@ -57,7 +57,7 @@ class SpyderHtml:
             elif self.args['getjs']:
                 get_js(url=self.args['target'], document=text, file=self.args['output'])
             elif self.args['techs']:
-                detect_technologies(url=self.args['target'])
+                detect_technologies(url=self.args['target'], filepath=self.args['output'])
             else:
                 attr = treat_objects(objects=self.args['attribs'])
                 soup_attrs(document=text, object=attr, file=self.args['output'])
