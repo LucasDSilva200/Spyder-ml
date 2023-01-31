@@ -4,7 +4,7 @@ from spyderml.lib.detectos import detect
 def open_file(filepath):
     try:
         if '~/' in filepath:
-            filepath = filepath.replace('~/',detect())
+            filepath = filepath.replace('~/', detect())
         with open(filepath, 'r') as file:
             lines = file.read()
             lines = lines.strip()
@@ -17,7 +17,7 @@ def open_file(filepath):
 
 def save_output(filename, text):
     if '~/' in filename:
-        filename = filename.replace('~/',detect())
-    with open(filename, 'a+') as file:
+        filename = filename.replace('~/', detect())
+    with open(filename, '+a') as file:
         file.write(str(text))
         file.write('\n')
