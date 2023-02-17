@@ -36,5 +36,3 @@ class Cacherequest:
                                                 + datetime.timedelta(minutes=self.life)).strftime(
                     "%Y-%m-%d %H:%M:%S"),
                                        "html": self.text}))
-
-

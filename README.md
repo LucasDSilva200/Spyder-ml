@@ -2,7 +2,7 @@
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="http://img.shields.io/static/v1?label=VERSION&message=1.2.0&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=VERSION&message=1.2.5&color=blue&style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/accessmaker/Spyder-ml?style=for-the-badge"/>
 </p>
 
@@ -46,5 +46,13 @@ options:<br>
   -o OUTPUT, --output OUTPUT
                         Flag that defines in which file the command output
                         will be saved.<br>
+  -C COOKIE, --cookie COOKIE
+                        Cookie to send with the request<br>
+  -A AGENT, --agent AGENT
+                        User-Agent to send with the request<br>
+  -S, --spider          flag to run spider<br>
+  -w WORKERS, --workers WORKERS
+                        Defines the number of workers.<br>
+  --domain DOMAIN       Defines the domain of the web crawler.<br>
 
 'Functionality': It searches the html document for specific things

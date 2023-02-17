@@ -21,7 +21,7 @@ setup(
     packages=find_packages('.'),
     # Start with a small number and increase it with
     # every change you make https://semver.org
-    version='1.2.0',
+    version='1.2.5',
     # Chose a license from here: https: //
     # help.github.com / articles / licensing - a -
     # repository. For example: MIT.

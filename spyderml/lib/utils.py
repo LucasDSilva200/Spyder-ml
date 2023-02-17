@@ -47,10 +47,30 @@ def detect_technologies(url, filepath=None):
         print("Connection error")
 
 
-def spyder_request(target):
+def spyder_request(target, useragent=None, cookie=None, headersfile=None):
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     cache = cache_manipulator.Cacherequest(life=60)
     try:
+        if useragent is not None or cookie is not None:
+            if useragent and cookie:
+                headers = {
+                    "User-Agent": useragent,
+                    "Cookie": cookie
+                }
+            elif cookie:
+                headers = {
+                    'Cookie': cookie
+                }
+            else:
+                headers = {
+                    'User-Agent': useragent
+                }
+            html = requests.get(url=target, headers=headers, allow_redirects=True)
+            return html.text
+        elif headersfile is not None:
+            html = requests.get(url=target, headers=headersfile, allow_redirects=True)
+            return html.text
+
         cache.get(target)
         return cache.text
     except requests.exceptions.SSLError:
@@ -69,8 +89,6 @@ def spyder_request(target):
     except Exception as e:
         logging.critical(e)
         exit()
-    else:
-        return r
 
 
 def soup_tags(document, object, file=None):
@@ -116,49 +134,10 @@ def get_js(url, document, file=None):
             print(script_url)
 
 
-def get_all_urls(document, file=None):
-    soup = Bs(document, 'html.parser')
-    urls = set([a['href'] for a in soup.find_all('a', href=True)])
-    print(f"{Fore.BLUE}[*]{Style.RESET_ALL} URLs encontradas: {len(urls)}")
-    for url in urls:
-        try:
-            response = requests.get(url=url, timeout=10, allow_redirects=True)
-            if file is not None:
-                save_output(filename=file, text=url)
-            elif 200 <= response.status_code < 300:
-                print(
-                    f"\t{Fore.BLUE}[+]{Style.RESET_ALL} {url} <{Fore.GREEN}{response.status_code}{Style.RESET_ALL}>" +
-                    f"\tSize: <{len(response.content)}>")
-            elif 300 <= response.status_code < 400:
-                print(
-                    f"\t{Fore.YELLOW}[!]{Style.RESET_ALL} {url} <{Fore.YELLOW}{response.status_code}{Style.RESET_ALL}>"
-                    + f"\tSize: <{len(response.content)}>")
-            elif 400 <= response.status_code < 500:
-                print(
-                    f"\t{Fore.RED}[-]{Style.RESET_ALL} {url} <{Fore.RED}{response.status_code}{Style.RESET_ALL}>"
-                    + f"\tSize: <{len(response.content)}>")
-            elif 500 <= response.status_code <= 504:
-                print(
-                    f"\t{Fore.YELLOW}[!]{Style.RESET_ALL} {url} <{Fore.CYAN}{response.status_code}{Style.RESET_ALL}>"
-                    + f"\tSize: <{len(response.content)}>")
-            else:
-                print(
-                    f"\t{Fore.YELLOW}[?]{Style.RESET_ALL} {url}<{response.status_code}>"
-                    + f"\tSize: <{len(response.content)}>")
 
-        except requests.exceptions.MissingSchema:
-            pass
-        except requests.exceptions.SSLError:
-            print(f"\t{Fore.RED}[-]{Style.RESET_ALL} {url} <{Fore.RED}SSL Error{Style.RESET_ALL}>")
-        except requests.exceptions.ConnectTimeout:
-            print(f"\t{Fore.RED}[-]{Style.RESET_ALL} {url} <{Fore.RED}Timeout{Style.RESET_ALL}>")
-        except Exception as e:
-            if "javascript:void(0)" in str(response.content):
-                continue
-            else:
-                print(f"\n\t{Fore.RED}ERROR:{Style.RESET_ALL} {url} <{Fore.RED}{e}{Style.RESET_ALL}>\n")
 
-def print_html(document, file = None):
+
+def print_html(document, file=None):
     if file is not None:
-        save_output(filename = file, text=document)
+        save_output(filename=file, text=document)
     print(document)
