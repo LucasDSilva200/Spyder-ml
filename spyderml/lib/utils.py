@@ -1,15 +1,13 @@
+import logging
 from urllib.parse import urljoin
 
 import requests
 import urllib3
-import logging
 import webtech
-
 from bs4 import BeautifulSoup as Bs
 from bs4 import Comment
 from colorama import Fore, Style
 
-from spyderml.lib import cache_manipulator
 from spyderml.lib.file import save_output
 
 
@@ -47,30 +45,9 @@ def detect_technologies(url, filepath=None):
         print("Connection error")
 
 
-def spyder_request(target, useragent=None, cookie=None, headersfile=None):
+def spyder_request(target, useragent=None, cookie=None, headersfile=None, proxy=None, cache=None):
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    cache = cache_manipulator.Cacherequest(life=60)
     try:
-        if useragent is not None or cookie is not None:
-            if useragent and cookie:
-                headers = {
-                    "User-Agent": useragent,
-                    "Cookie": cookie
-                }
-            elif cookie:
-                headers = {
-                    'Cookie': cookie
-                }
-            else:
-                headers = {
-                    'User-Agent': useragent
-                }
-            html = requests.get(url=target, headers=headers, allow_redirects=True)
-            return html.text
-        elif headersfile is not None:
-            html = requests.get(url=target, headers=headersfile, allow_redirects=True)
-            return html.text
-
         cache.get(target)
         return cache.text
     except requests.exceptions.SSLError:
@@ -132,9 +109,6 @@ def get_js(url, document, file=None):
             if file is not None:
                 save_output(filename=file, text=script_url)
             print(script_url)
-
-
-
 
 
 def print_html(document, file=None):

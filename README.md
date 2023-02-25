@@ -2,7 +2,7 @@
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="http://img.shields.io/static/v1?label=VERSION&message=1.2.5&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=VERSION&message=2.0.0&color=blue&style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/accessmaker/Spyder-ml?style=for-the-badge"/>
 </p>
 
@@ -24,9 +24,10 @@ pip install spyder-ml
 
 <h2>USAGE:</h2>
 
-spyderml [-h] [-t TARGET | -f FILE | --update]
-         [--tags TAGS | --comments | --attribs ATTRIBS | --getjs | --techs]
-         [-o OUTPUT]
+spyderml       [-h] [-t TARGET | -f FILE | --update]
+               [--tags TAGS | --comments | --attribs ATTRIBS | --getjs | --techs | --geturls | --html]
+               [-o OUTPUT] [-C COOKIE] [-A AGENT] [-hf HEADERSFILE] [-S]
+               [-w WORKERS] [--domain DOMAIN] [--cache] [--proxy PROXY]
 
 A tool made to facilitate the analysis of html code.
 
@@ -54,5 +55,11 @@ options:<br>
   -w WORKERS, --workers WORKERS
                         Defines the number of workers.<br>
   --domain DOMAIN       Defines the domain of the web crawler.<br>
+  --cache               Defines whether to create cache or not (default:
+                        false).<br>
+  --proxy PROXY         Defines the proxy that will be used (Which can be
+                        passed tor or burpsuite to use these two default
+                        proxies).<br>
+
 
 'Functionality': It searches the html document for specific things

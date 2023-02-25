@@ -4,11 +4,13 @@
 import argparse
 import sys
 
+from spyderml.lib import spyder_reqs
 from spyderml.lib.asciiarts import banner
+from spyderml.lib.handle_headers_and_proxy import handle_headers, handle_proxy
 from spyderml.lib.spidercrawler import get_all_urls, WebCrawling
-from spyderml.lib.utils import spyder_request, treat_objects, soup_tags, soup_comments, soup_attrs, get_js, \
+from spyderml.lib.utils import treat_objects, soup_tags, soup_comments, soup_attrs, get_js, \
     detect_technologies, update_database, print_html
-from spyderml.lib.file import open_file, open_headers_file
+from spyderml.lib.file import open_file
 
 sys.stdin.reconfigure(encoding='utf-8')
 sys.stdout.reconfigure(encoding='utf-8')
@@ -20,15 +22,25 @@ class TreatArguments:
 
     def run(self):
         print(banner())
+        headers = handle_headers(useragent=self.args['agent'],
+                                 cookies=self.args['cookie'],
+                                 headersfile=self.args['headersfile'])
+        proxy = handle_proxy(self.args['proxy'])
         try:
             if self.args['file']:
                 targets = open_file(filepath=self.args['file'])
                 htmls = []
                 for target in targets:
-                    if self.args['techs']:
-                        detect_technologies(url=target, filepath=self.args['output'])
+                    if headers is not None:
+                        spyder_request = spyder_reqs.Cacherequest(life=60, proxy=proxy,
+                                                                  headers=headers)
+                        spyder_request.get(url=target)
+                        htmls.append(spyder_request.text)
                     else:
-                        htmls.append(spyder_request(target))
+                        spyder_request = spyder_reqs.Cacherequest(life=60, cache=self.args['cache'],
+                                                                  headers=headers, proxy=proxy)
+                        spyder_request.get(url=target)
+                        htmls.append(spyder_request.text)
                 try:
                     for html in htmls:
                         if self.args['tags']:
@@ -51,13 +63,16 @@ class TreatArguments:
                 update_database()
 
             else:
-                if self.args['headersfile'] is not None:
-                    headers = open_headers_file(headers_file=self.args['headersfile'])
-                    html_document = spyder_request(target=self.args['target'],
-                                                   headersfile=headers)
+                if headers is not None:
+                    spyder_request = spyder_reqs.Cacherequest(life=60, proxy=proxy,
+                                                              headers=headers)
+                    spyder_request.get(url=self.args['target'])
+                    html_document = spyder_request.text
                 else:
-                    html_document = spyder_request(target=self.args['target'], useragent=self.args['agent'],
-                                                   cookie=self.args['cookie'])
+                    spyder_request = spyder_reqs.Cacherequest(life=60, cache=self.args['cache'],
+                                                              proxy=proxy, headers=headers)
+                    spyder_request.get(url=self.args['target'])
+                    html_document = spyder_request.text
 
                 if self.args['tags']:
                     tags = treat_objects(objects=self.args['tags'])
@@ -117,26 +132,35 @@ def main():
 
     parser.add_argument('-o', '--output', type=str,
                         help="Flag that defines in which file the command output will be "
-                        "saved.")
+                             "saved.")
     parser.add_argument('-C', '--cookie', type=str, help="Cookie to send with the request",
-                        default='')
+                        default=None)
     parser.add_argument('-A', '--agent', type=str, help="User-Agent to send with the request",
-                        default='')
+                        default=None)
     parser.add_argument('-hf', '--headersfile', type=str, default=None,
                         help="Parameter that passes an HTTP request"
                              + " header file to be scanned.")
 
     parser.add_argument('-S', '--spider', action='store_true',
-                        help='flag to run spider', required=False)
+                        help='flag to run spider', default=False)
 
     parser.add_argument('-w', '--workers', type=int, default=4,
                         help="Defines the number of workers.")
     parser.add_argument('--domain', type=str, default=None,
                         help="Defines the domain of the web crawler.")
+    parser.add_argument('--cache', action='store_true', default=False,
+                        help="Defines whether to create cache or not (default: false).")
+    parser.add_argument('--proxy', type=str, default=None,
+                        help="Defines the proxy that will be used (Which can be passed tor or burpsuite to use these"
+                             + " two default proxies).")
+
     args = vars(parser.parse_args())
 
     if not any(args.values()):
         parser.error('No arguments provided.')
+        sys.exit(0)
+    if not args['target'] and not args['file']:
+        parser.error('No url the file with defined urls.')
         sys.exit(0)
     if args['spider'] and not args['geturls']:
         parser.error('--spider can only be used with --geturls')
