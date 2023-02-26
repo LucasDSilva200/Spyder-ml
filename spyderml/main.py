@@ -6,10 +6,10 @@ import sys
 
 from spyderml.lib import spyder_reqs
 from spyderml.lib.asciiarts import banner
-from spyderml.lib.handle_headers_and_proxy import handle_headers, handle_proxy
+from spyderml.lib.handle_headers_and_proxy import handle_headers, handle_proxy, handle_data
 from spyderml.lib.spidercrawler import get_all_urls, WebCrawling
 from spyderml.lib.utils import treat_objects, soup_tags, soup_comments, soup_attrs, get_js, \
-    detect_technologies, update_database, print_html
+    detect_technologies, update_database, print_html, json_response, print_headers
 from spyderml.lib.file import open_file
 
 sys.stdin.reconfigure(encoding='utf-8')
@@ -26,52 +26,28 @@ class TreatArguments:
                                  cookies=self.args['cookie'],
                                  headersfile=self.args['headersfile'])
         proxy = handle_proxy(self.args['proxy'])
+        data = handle_data(self.args['data'])
         try:
-            if self.args['file']:
-                targets = open_file(filepath=self.args['file'])
-                htmls = []
-                for target in targets:
-                    if headers is not None:
-                        spyder_request = spyder_reqs.Cacherequest(life=60, proxy=proxy,
-                                                                  headers=headers)
-                        spyder_request.get(url=target)
-                        htmls.append(spyder_request.text)
-                    else:
-                        spyder_request = spyder_reqs.Cacherequest(life=60, cache=self.args['cache'],
-                                                                  headers=headers, proxy=proxy)
-                        spyder_request.get(url=target)
-                        htmls.append(spyder_request.text)
-                try:
-                    for html in htmls:
-                        if self.args['tags']:
-                            tags = treat_objects(objects=self.args['tags'])
-                            soup_tags(document=html, object=tags, file=self.args['output'])
-                        elif self.args['comments']:
-                            soup_comments(document=html, file=self.args['output'])
-                        elif self.args['getjs']:
-                            get_js(url=self.args['target'], document=html, file=self.args['output'])
-                        elif self.args['geturls']:
-                            get_all_urls(document=html, file=self.args['output'])
-                        else:
-                            attr = treat_objects(objects=self.args['attribs'])
-                            soup_attrs(document=html, object=attr, file=self.args['output'])
-
-                except AttributeError:
-                    pass
-
-            elif self.args['update']:
+            if self.args['update']:
                 update_database()
 
             else:
                 if headers is not None:
-                    spyder_request = spyder_reqs.Cacherequest(life=60, proxy=proxy,
+                    spyder_request = spyder_reqs.Cacherequest(life=60, cache=self.args['cache'],
+                                                              proxy=proxy,
                                                               headers=headers)
-                    spyder_request.get(url=self.args['target'])
+                    if self.args['tr'].lower() == 'post':
+                        spyder_request.post(url=self.args['target'], data=data)
+                    elif self.args['tr'].lower() == 'get':
+                        spyder_request.get(url=self.args['target'])
                     html_document = spyder_request.text
                 else:
                     spyder_request = spyder_reqs.Cacherequest(life=60, cache=self.args['cache'],
-                                                              proxy=proxy, headers=headers)
-                    spyder_request.get(url=self.args['target'])
+                                                              proxy=proxy)
+                    if self.args['tr'].lower() == 'post':
+                        spyder_request.post(url=self.args['target'], data=data)
+                    elif self.args['tr'].lower() == 'get':
+                        spyder_request.get(url=self.args['target'])
                     html_document = spyder_request.text
 
                 if self.args['tags']:
@@ -92,9 +68,15 @@ class TreatArguments:
                         get_all_urls(document=html_document, file=self.args['output'])
                 elif self.args['html']:
                     print_html(document=html_document, file=self.args['output'])
-                else:
+                elif self.args['jsr']:
+                    json_response(document=html_document, file=self.args['output'])
+
+                elif self.args['attribs']:
                     attr = treat_objects(objects=self.args['attribs'])
                     soup_attrs(document=html_document, object=attr, file=self.args['output'])
+                else:
+                    spyder_request.response_and_request_headers(url=self.args['target'])
+                    print_headers(spyder_request.headers_text, filenane=self.args['output'])
         except KeyboardInterrupt:
             print("\nClossing...\n")
             sys.exit(0)
@@ -109,8 +91,8 @@ def main():
 
     group_target.add_argument('-t', '--target', type=str, help="Parameter that defines the target URL "
                                                                "http://example.com/index.html")
-    group_target.add_argument('-f', '--file', type=str, help="Parameter that defines target URLs")
-
+    parser.add_argument('--tr', type=str, default="GET",
+                        help='Type of request.')
     group_target.add_argument('--update', help='Flag responsible for updating the database.',
                               default=False, action='store_true')
     group_action.add_argument('--tags', type=str, help="Flag that defines which tags the program will bring")
@@ -129,7 +111,8 @@ def main():
 
     group_action.add_argument('--html', help='This Flag results in all the page\'s html code.',
                               default=False, action='store_true')
-
+    group_action.add_argument('--jsr', action='store_true', default=False,
+                              help="Makes a request that returns a JSON.")
     parser.add_argument('-o', '--output', type=str,
                         help="Flag that defines in which file the command output will be "
                              "saved.")
@@ -153,13 +136,15 @@ def main():
     parser.add_argument('--proxy', type=str, default=None,
                         help="Defines the proxy that will be used (Which can be passed tor or burpsuite to use these"
                              + " two default proxies).")
+    parser.add_argument('-D', '--data', nargs='+',
+                        help="Data to send with the request in format key:value")
 
     args = vars(parser.parse_args())
 
     if not any(args.values()):
         parser.error('No arguments provided.')
         sys.exit(0)
-    if not args['target'] and not args['file']:
+    if not args['target'] and not args['update']:
         parser.error('No url the file with defined urls.')
         sys.exit(0)
     if args['spider'] and not args['geturls']:
@@ -180,3 +165,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# comentando uma linha de código Ctrl + /

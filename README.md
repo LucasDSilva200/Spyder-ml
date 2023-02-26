@@ -2,7 +2,7 @@
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="http://img.shields.io/static/v1?label=VERSION&message=2.0.0&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=VERSION&message=2.1.0&color=blue&style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/accessmaker/Spyder-ml?style=for-the-badge"/>
 </p>
 
@@ -24,10 +24,11 @@ pip install spyder-ml
 
 <h2>USAGE:</h2>
 
-spyderml       [-h] [-t TARGET | -f FILE | --update]
-               [--tags TAGS | --comments | --attribs ATTRIBS | --getjs | --techs | --geturls | --html]
+spyderml       [-h] [-t TARGET] [--tr TR] [--update]
+               [--tags TAGS | --comments | --attribs ATTRIBS | --getjs | --techs | --geturls | --html | --jsr]
                [-o OUTPUT] [-C COOKIE] [-A AGENT] [-hf HEADERSFILE] [-S]
                [-w WORKERS] [--domain DOMAIN] [--cache] [--proxy PROXY]
+               [-D DATA [DATA ...]]
 
 A tool made to facilitate the analysis of html code.
 
@@ -36,7 +37,7 @@ options:<br>
   -t TARGET, --target TARGET<br>
                         Parameter that defines the target URL<
                         http://example.com/index.html <br>
-  -f FILE, --file FILE  Parameter that defines target URLs<br>
+  --tr TR               Type of request(POST or GET(Default)).
   --update              Flag responsible for updating the database.<br>
   --tags TAGS           Flag that defines which tags the program will bring<br>
   --comments            Flag that brings the comments<br>
@@ -44,6 +45,10 @@ options:<br>
                         will look for.<br>
   --getjs               Flag that brings all JS files from the page.<br>
   --techs               Flag trying to discover the technologies of the page.<br>
+  --geturls             This flag takes all the target's urls and tries to
+                        access them.<br>
+  --html                This Flag results in all the page's html code.<br>
+  --jsr                 Makes a request that returns a JSON.<br>
   -o OUTPUT, --output OUTPUT
                         Flag that defines in which file the command output
                         will be saved.<br>
@@ -51,6 +56,9 @@ options:<br>
                         Cookie to send with the request<br>
   -A AGENT, --agent AGENT
                         User-Agent to send with the request<br>
+  -hf HEADERSFILE, --headersfile HEADERSFILE
+                        Parameter that passes an HTTP request header file to
+                        be scanned.<br>
   -S, --spider          flag to run spider<br>
   -w WORKERS, --workers WORKERS
                         Defines the number of workers.<br>
@@ -60,6 +68,7 @@ options:<br>
   --proxy PROXY         Defines the proxy that will be used (Which can be
                         passed tor or burpsuite to use these two default
                         proxies).<br>
-
+  -D DATA [DATA ...], --data DATA [DATA ...]
+                        Data to send with the request in format key:value<br>
 
 'Functionality': It searches the html document for specific things

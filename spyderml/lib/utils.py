@@ -1,4 +1,5 @@
 import logging
+import json
 from urllib.parse import urljoin
 
 import requests
@@ -43,29 +44,6 @@ def detect_technologies(url, filepath=None):
         print('\n')
     except webtech.utils.ConnectionException:
         print("Connection error")
-
-
-def spyder_request(target, useragent=None, cookie=None, headersfile=None, proxy=None, cache=None):
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    try:
-        cache.get(target)
-        return cache.text
-    except requests.exceptions.SSLError:
-        print(f"{Fore.RED}{target}\t<SSL Error>{Style.RESET_ALL}")
-        exit()
-    except requests.exceptions.MissingSchema:
-        print(f"{Fore.RED}{target}:\nInvalid url\n http://?{Style.RESET_ALL}")
-        exit()
-    except requests.exceptions.InvalidSchema:
-        print(f"{Fore.RED}{target} ERROR{Style.RESET_ALL}")
-        exit()
-    except requests.exceptions.ConnectionError:
-        print(f"{Fore.RED}Attempt to connect to the host: {target} refused...\n"
-              f"Tip: Try to exchange https for http or http for https.{Style.RESET_ALL}")
-        exit()
-    except Exception as e:
-        logging.critical(e)
-        exit()
 
 
 def soup_tags(document, object, file=None):
@@ -115,3 +93,31 @@ def print_html(document, file=None):
     if file is not None:
         save_output(filename=file, text=document)
     print(document)
+
+
+def json_response(document, file=None):
+    json_content = json.loads(document)
+    if file is not None:
+        save_output(filename=file, text=json_content)
+    print(json.dumps(json_content, indent=4))
+
+
+def print_headers(headers_dict_list, filenane=None):
+    if filenane is not None:
+        for index, headers_dict in enumerate(headers_dict_list):
+            if index == 0:
+                save_output(filename=filenane, text="------------Request Headers-----------")
+            elif index == 1:
+                save_output(filename=filenane, text="------------Response Headers-----------")
+            for key in headers_dict:
+                save_output(filename=filenane, text=f"{key}: {headers_dict[key]}")
+            save_output(filename=filenane, text="-"*39+"\n")
+    for index, headers_dict in enumerate(headers_dict_list):
+        if index == 0:
+            print(f"------------{Fore.CYAN}Request Headers{Style.RESET_ALL}-----------")
+        elif index == 1:
+            print(f"------------{Fore.CYAN}Response Headers{Style.RESET_ALL}-----------")
+        for key in headers_dict.keys():
+            print(f"{Fore.LIGHTMAGENTA_EX}{key}{Style.RESET_ALL}: {headers_dict[key]}")
+
+        print("-"*39+"\n")

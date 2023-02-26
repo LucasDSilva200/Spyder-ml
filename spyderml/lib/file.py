@@ -25,5 +25,9 @@ def open_headers_file(headers_file):
     if '~/' in headers_file:
         headers_file = headers_file.replace('~/', detect())
     with open(headers_file) as f:
-        headers = dict(line.split(': ', 1) for line in f.read().splitlines())
+        headers = {}
+        for line in f:
+            if ': ' in line:
+                key, value = line.split(': ', 1)
+                headers[key] = value.strip()
     return headers

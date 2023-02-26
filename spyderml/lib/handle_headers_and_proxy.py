@@ -44,3 +44,14 @@ def handle_proxy(proxy):
             'https': proxy
         }
     return proxies
+
+
+def handle_data(data):
+    if data:
+        data_dict = {}
+        for item in data:
+            key, value = item.split(':')
+            data_dict[key] = value
+    else:
+        data_dict = None
+    return data_dict
