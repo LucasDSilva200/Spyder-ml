@@ -2,7 +2,7 @@
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="http://img.shields.io/static/v1?label=VERSION&message=2.1.0&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=VERSION&message=2.1.1&color=blue&style=for-the-badge"/>
 <img src="https://img.shields.io/github/license/accessmaker/Spyder-ml?style=for-the-badge"/>
 </p>
 
@@ -69,6 +69,7 @@ options:<br>
                         passed tor or burpsuite to use these two default
                         proxies).<br>
   -D DATA [DATA ...], --data DATA [DATA ...]
-                        Data to send with the request in format key:value<br>
+                        Data to send with the request in format key1:value1
+                        key2:value2 key3:value3...<br>
 
 'Functionality': It searches the html document for specific things

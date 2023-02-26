@@ -137,7 +137,7 @@ def main():
                         help="Defines the proxy that will be used (Which can be passed tor or burpsuite to use these"
                              + " two default proxies).")
     parser.add_argument('-D', '--data', nargs='+',
-                        help="Data to send with the request in format key:value")
+                        help="Data to send with the request in format key1:value1 key2:value2 key3:value3...")
 
     args = vars(parser.parse_args())
 
