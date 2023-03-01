@@ -16,7 +16,7 @@ sys.stdin.reconfigure(encoding='utf-8')
 sys.stdout.reconfigure(encoding='utf-8')
 
 
-# Clase que trata os argumentos passados pela função main()
+# Classe que trata os argumentos passados pela função main()
 class TreatArguments:
     def __init__(self, args):
         self.args = args
