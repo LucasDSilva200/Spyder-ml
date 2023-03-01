@@ -96,7 +96,7 @@ def get_links(html, domain):
         print(f"ERROR: {e}")
 
 
-# Rua piratininga 1292 bloco 68 número 23
+# Clase webcrawling que gerencia as threads e a fila do crawler
 class WebCrawling:
     def __init__(self, permission, filepath=None, domain=None, workers=4):
         self.permission = permission

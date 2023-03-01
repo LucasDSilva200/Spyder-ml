@@ -16,10 +16,12 @@ sys.stdin.reconfigure(encoding='utf-8')
 sys.stdout.reconfigure(encoding='utf-8')
 
 
+# Clase que trata os argumentos passados pela função main()
 class TreatArguments:
     def __init__(self, args):
         self.args = args
 
+    # Método que trata e define a ação que será tratada pela aplicação
     def run(self):
         print(banner())
         headers = handle_headers(useragent=self.args['agent'],
@@ -82,6 +84,7 @@ class TreatArguments:
             sys.exit(0)
 
 
+# Passando os argumentos de linha de comando com o argparse
 def main():
     parser = argparse.ArgumentParser(description="A tool made to facilitate the analysis of html code.")
 
@@ -165,5 +168,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# comentando uma linha de código Ctrl + /
