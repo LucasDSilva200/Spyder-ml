@@ -3,6 +3,7 @@
 
 import argparse
 import sys
+import argcomplete
 
 from spyderml.lib import spyder_reqs
 from spyderml.lib.asciiarts import banner
@@ -141,6 +142,8 @@ def main():
                              + " two default proxies).")
     parser.add_argument('-D', '--data', nargs='+',
                         help="Data to send with the request in format key1:value1 key2:value2 key3:value3...")
+
+    argcomplete.autocomplete(parser)
 
     args = vars(parser.parse_args())
 
