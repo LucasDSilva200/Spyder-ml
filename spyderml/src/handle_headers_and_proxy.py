@@ -1,4 +1,4 @@
-from spyderml.lib.file import open_headers_file
+from spyderml.src.file import open_headers_file
 
 
 def handle_headers(useragent, cookies, headersfile):

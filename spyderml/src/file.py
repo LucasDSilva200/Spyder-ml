@@ -1,4 +1,4 @@
-from spyderml.lib.detectos import detect
+from spyderml.src.detectos import detect
 
 
 def open_file(filepath):
