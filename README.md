@@ -33,7 +33,7 @@ options:<br>
   -t TARGET, --target TARGET<br>
                         Parameter that defines the target URL<
                         <http://example.com/index.html> <br>
-  --tr TR               Type of request(POST or GET(Default)).
+  --tr TR               Type of request(POST or GET(Default)).<br>
   --update              Flag responsible for updating the database.<br>
   --tags TAGS           Flag that defines which tags the program will bring<br>
   --comments            Flag that brings the comments<br>
