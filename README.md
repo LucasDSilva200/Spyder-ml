@@ -10,7 +10,7 @@ A tool made to facilitate the analysis of html code.
 
 <h2>INSTALL(git clone):</h2>
 
-git clone <https://github.com/accessmaker/Spyder-ml>
+git clone <https://github.com/LucasDSilva200/Spyder-ml>
 
 python setup.py install
 
